@@ -1,16 +1,23 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, ScrollView} from 'react-native';
+import { Button, NativeBaseProvider } from 'native-base';
 import MapView from 'react-native-maps'
+
+import tw from 'twrnc';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <MapView style={{ flex: 1 }} region={{ latitude: 42.882004, longitude: 74.582748, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }} showsUserLocation={true} />
-      
-    </View>
+    <NativeBaseProvider>
+
+      <ScrollView style={tw``}>
+
+        <Button style={tw`mt-10`}>wow</Button>
+
+      </ScrollView>
+    </NativeBaseProvider>
+   
   );
 }
-<MapView style={{ flex: 1 }} region={{ latitude: 42.882004, longitude: 74.582748, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }} showsUserLocation={true} />
 
 const styles = StyleSheet.create({
   container: {
