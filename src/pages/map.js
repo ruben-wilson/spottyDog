@@ -16,7 +16,7 @@ export default function Map({navigation}) {
           latitudeDelta: 0.0312,
           longitudeDelta: 0.0321,
         }
-        }
+        }   
       >
         <Marker
           coordinate={{
