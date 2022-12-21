@@ -4,12 +4,10 @@ import { View, Text, TouchableOpacity } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from 'expo-location';
 
+import viewPointFinder from '../functions/findViewPoints';
+
 import tw from "twrnc";
 
-const dataHandler = require('../components/dataHandler.js')
-const api_key = 'AIzaSyCuIx6jsRwkt-nc7yrbrE-nFXXcJYUfGf4'
-
-const ViewPointAPi = require('../components/apis/viewPointApi.js')
 
 export default function Map({navigation}) {
 
@@ -29,14 +27,10 @@ export default function Map({navigation}) {
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
 
-      const Api = new ViewPointAPi(api_key)
-      const lat = "51.475638"
-      const lng = "0.015027"
-      const radius = "1600"
-      const keyword = "viewpoints"
+      const lat = location.coords.latitude
+      const lng = location.coords.longitude
 
-      const data = await Api.getData(lat, lng, radius, keyword);
-      const results = dataHandler(data)
+      const results = await viewPointFinder(lat, lng)
       setMarkers(results)
     })();
 
@@ -52,7 +46,7 @@ export default function Map({navigation}) {
 
   if(location){
     return (
-      <View style={tw`h-100 mt-20`}>
+      <View style={tw`h-200 mt-1`}>
         <MapView
           style={tw`flex-1`}
           Region={{
@@ -60,19 +54,20 @@ export default function Map({navigation}) {
             longitude: location.coords.longitude,
             latitudeDelta: location.coords.latitudeDelta,
             longitudeDelta: location.coords.longitudeDelta,
-          }
-          }
+          }}
+          onRegionChangeComplete={async (region) => { 
+            const results = await viewPointFinder(region.latitude, region.longitude) 
+            setMarkers(results)
+          }}
         >
-    
           {markers !== null ? markers.map((location, index) => {
             return (
               <Marker
                 key={index}
                 coordinate={{ latitude: location.location.lat, longitude: location.location.long }}
                 title={location.name}
-                description={location.rating.toString()}
+                description={location.rating.toString() + "⭐️"}
                 >
-      
               </Marker>
             )
           }) : null}

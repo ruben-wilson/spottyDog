@@ -7,6 +7,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import Map from './src/pages/map';
 import Profile from './src/pages/profile';
 
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
