@@ -63,19 +63,19 @@ export default function Map({navigation}) {
           }
           }
         >
+    
           {markers !== null ? markers.map((location, index) => {
             return (
               <Marker
-                
+                key={index}
                 coordinate={{ latitude: location.location.lat, longitude: location.location.long }}
-                
-
-              />
+                title={location.name}
+                description={location.rating.toString()}
+                >
+      
+              </Marker>
             )
-          }) : null
-           
-
-        }
+          }) : null}
         </MapView>
         <Text>{JSON.stringify(markers)}</Text>
       </View>
